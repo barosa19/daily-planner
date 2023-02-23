@@ -1,33 +1,29 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
 $(function () {
   var today = dayjs()
   var currentHour = today.format("hA")
 
-  // TODO: Add a listener for click events on the save button. This code should
+  // Added an event listener for the save button in each hour
   var saveBtn = $('.saveBtn')
+  
   saveBtn.on('click', function(event){
-    console.log($(this).parent())
+    var txtEl = $(this).prev()
+    var eventEl = txtEl.val()
+    var parentEl = $(this).parent()
+    var divEl = parentEl[0]
+    // ?? Explain $ and how it interacts with regualr js and when to use it and when not to
+    var hourIdEl = divEl.getAttribute('id') //divEl.id worked
+    localStorage.setItem(hourIdEl, eventEl)
   })
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
   
   // Changes class depending on current time
   var hourClass = $('.hour')
   hourClass.each(function () {
     var currentClasstext = $(this).text()
-
-    var currentClassNum = currentClasstext.slice(0,currentClasstext.length-2)
-    if (currentClassNum < 8){
-      currentClassNum = +currentClassNum + 12
-    }
-    
-    var CCdayjs = dayjs().hour(currentClassNum)
     var currentParent = $(this).parent()
+    var parentId = currentParent[0]
+    hourId = parentId.getAttribute('id')
+    hourEl =hourId.split('-')[1]
+    var CCdayjs = dayjs().hour(hourEl)
 
     if (currentClasstext == currentHour) {
       currentParent.removeClass("past present future")
@@ -50,5 +46,3 @@ $(function () {
   // displays current time to header
   $('#currentDay').text(today.format('dddd, MMMM Do'))
 });
-
-//.on('click', function())
