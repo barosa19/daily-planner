@@ -2,9 +2,9 @@
 // the code isn't run until the browser has finished rendering all the elements
 // in the html.
 $(function () {
-  var today=dayjs()
+  var today = dayjs()
   var currentHour = today.format("hA")
-  
+
   // TODO: Add a listener for click events on the save button. This code should
   // use the id in the containing time-block as a key to save the user input in
   // local storage. HINT: What does `this` reference in the click listener
@@ -13,23 +13,29 @@ $(function () {
   // useful when saving the description in local storage?
   //
   // TODO: Add code to apply the past, present, or future class to each time
-  // block by comparing the id to the current hour. HINTS: How can the id
-  // attribute of each time-block be used to conditionally add or remove the
-  // past, present, and future classes? How can Day.js be used to get the
-  // current hour in 24-hour time?
-  var hourClass=$('.hour')
-  hourClass.each(function(){
-    
-    var currentParent= hourClass.parents()
-    if (hourClass.text() === currentHour){
+  var hourClass = $('.hour')
+  hourClass.each(function () {
+    var currentClasstext = $(this).text()
+    var currentClassNum = currentClasstext.slice(0,currentClasstext.length-2)
+    if (currentClassNum < 8){
+      currentClassNum = +currentClassNum + 12
+    }
+    console.log(currentClassNum)
+    var CCdayjs = dayjs().hour(currentClassNum)
+    var currentParent = $(this).parent()
+    if (currentClasstext == currentHour) {
+      currentParent.removeClass("past present future")
       currentParent.addClass("present")
-      currentParent.removeClass("past future")
+    }
+    else if(CCdayjs.isAfter(today)) {
+      currentParent.removeClass(" past present future")
+      currentParent.addClass("future")
+      console.log(CCdayjs.isAfter(today))
     }
     else {
+      currentParent.removeClass(" past present future")
       currentParent.addClass("past")
-      currentParent.removeClass("present future past")
     }
-    console.log(hourClass.text() + currentHour)
   })
   //
   // TODO: Add code to get any user input that was saved in localStorage and set
