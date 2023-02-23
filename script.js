@@ -4,20 +4,14 @@ $(function () {
 
   // Added an event listener for the save button in each hour
   var saveBtn = $('.saveBtn')
-  
   saveBtn.on('click', function(event){
     var txtEl = $(this).prev()
-    var eventEl = txtEl.val()
-    var parentEl = $(this).parent()
-    var divEl = parentEl[0]
-    // ?? Explain $ and how it interacts with regualr js and when to use it and when not to
-    var hourIdEl = divEl.getAttribute('id') //divEl.id worked
-    localStorage.setItem(hourIdEl, eventEl)
+    var parentEl = $(this).parent()[0]
+    localStorage.setItem(parentEl.getAttribute("id"), txtEl.val())
   })
   
-  // Changes class depending on current time
+  // Changes class depending on current time and gets item from local storage
   var hourClass = $('.hour')
-
   hourClass.each(function () {
     var currentClasstext = $(this).text()
     var currentParent = $(this).parent()
@@ -38,28 +32,13 @@ $(function () {
       currentParent.removeClass(" past present future")
       currentParent.addClass("past")
     }
+
+    if(localStorage.getItem(hourId)){
+      $(this).next().text(localStorage.getItem(hourId))
+    }
+
   })
   //
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
-  var timeblockEl = $('.time-block')
-
-  timeblockEl.each(function(){
-    var divId = $(this)[0]
-    var hourId = $(this)[0].id
-    var textId = divId.children[1]
-    var localId = localStorage.getItem(hourId)
-    // need to grab the description class and add text to that description
-    /* if (localId == null){
-     var inputId = textId.innerHTML("")
-    }
-    else {
-      textId.innerHTML(localId)
-    } */
-  })
-
-
   // displays current time to header
   $('#currentDay').text(today.format('dddd, MMMM Do'))
 });
