@@ -17,11 +17,12 @@ $(function () {
   
   // Changes class depending on current time
   var hourClass = $('.hour')
+
   hourClass.each(function () {
     var currentClasstext = $(this).text()
     var currentParent = $(this).parent()
     var parentId = currentParent[0]
-    hourId = parentId.getAttribute('id')
+    hourId = parentId.id
     hourEl =hourId.split('-')[1]
     var CCdayjs = dayjs().hour(hourEl)
 
@@ -42,7 +43,23 @@ $(function () {
   // TODO: Add code to get any user input that was saved in localStorage and set
   // the values of the corresponding textarea elements. HINT: How can the id
   // attribute of each time-block be used to do this?
-  
+  var timeblockEl = $('.time-block')
+
+  timeblockEl.each(function(){
+    var divId = $(this)[0]
+    var hourId = $(this)[0].id
+    var textId = divId.children[1]
+    var localId = localStorage.getItem(hourId)
+    // need to grab the description class and add text to that description
+    /* if (localId == null){
+     var inputId = textId.innerHTML("")
+    }
+    else {
+      textId.innerHTML(localId)
+    } */
+  })
+
+
   // displays current time to header
   $('#currentDay').text(today.format('dddd, MMMM Do'))
 });
