@@ -38,7 +38,7 @@ $(function () {
     }
 
   })
-  //
+  
   // displays current time to header
   $('#currentDay').text(today.format('dddd, MMMM Do'))
 });
