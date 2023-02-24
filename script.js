@@ -7,7 +7,7 @@ $(function () {
   saveBtn.on('click', function(event){
     var txtEl = $(this).prev()
     var parentEl = $(this).parent()[0]
-    localStorage.setItem(parentEl.getAttribute("id"), txtEl.val())
+    localStorage.setItem(parentEl.id, txtEl.val())
   })
   
   // Changes class depending on current time and gets item from local storage
@@ -15,10 +15,8 @@ $(function () {
   hourClass.each(function () {
     var currentClasstext = $(this).text()
     var currentParent = $(this).parent()
-    var parentId = currentParent[0]
-    hourId = parentId.id
-    hourEl =hourId.split('-')[1]
-    var CCdayjs = dayjs().hour(hourEl)
+    var parentId = currentParent[0].id
+    var CCdayjs = dayjs().hour(parentId.split('-')[1])
 
     if (currentClasstext == currentHour) {
       currentParent.removeClass("past present future")
@@ -33,10 +31,10 @@ $(function () {
       currentParent.addClass("past")
     }
 
-    if(localStorage.getItem(hourId)){
-      $(this).next().text(localStorage.getItem(hourId))
+    //grabs value in local storage and prints it in the correspond textarea
+    if(localStorage.getItem(parentId)){
+      $(this).next().text(localStorage.getItem(parentId))
     }
-
   })
   
   // displays current time to header
