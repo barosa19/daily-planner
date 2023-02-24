@@ -12,6 +12,9 @@ No installation is required for this application. To visit the the webpage open 
 
 This webpage is designed to show past events (with a grey background), present events (with a red background), and future events (with a green background). The user may input those events in the text area and save it to their local storage. Thus when they need to refer back to it the event will still be on their planner. 
 
+![daily schedule screenshot](https://user-images.githubusercontent.com/122834927/221127180-8baa05ee-b04b-4be3-8324-c513a9b652ff.PNG)
+
+
 ## Credits
 N/A
 
